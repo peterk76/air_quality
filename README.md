@@ -1,1 +1,1 @@
-# air_quality
+# air quality demo project
