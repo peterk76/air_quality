@@ -29,7 +29,7 @@ public final class StatsService {
 
     final MeasureRepositoryImpl measureRepository;
     final CityService cityService;
-    final AverageCpRepositoryImpl averageRepository;
+    final AverageCpRepositoryImpl averageCpRepository;
 
     public M3Dto get3M(final UUID regionId) {
         var cities = cityService.getCitiesByRegionId(regionId);
@@ -40,7 +40,7 @@ public final class StatsService {
                 .map(City::getCityId)
                 .toList();
         var dates = List.of(getDate(1), getDate(2), getDate(3));
-        var averages = averageRepository.findByYrmonInAndCitIn(dates, citiesUids);
+        var averages = averageCpRepository.findByYrmonInAndCitIn(dates, citiesUids);
         var citiesCo = new ArrayList<String>();
         var citiesPm10 = new ArrayList<String>();
         cities.forEach(city -> {
