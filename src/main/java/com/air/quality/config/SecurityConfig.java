@@ -8,10 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestHandler;
 import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
@@ -44,6 +42,7 @@ public class SecurityConfig {
                                 authorizeRequests
                                         .requestMatchers("/api/stats/**").permitAll()
                                         //.requestMatchers("/api/report/**").permitAll() // TODO
+                                        .requestMatchers("/city/**").permitAll() // TODO
                                         .requestMatchers("/api/save-measure").permitAll()
                                         //.anyRequest().permitAll()
                                         .anyRequest().authenticated()
@@ -55,9 +54,9 @@ public class SecurityConfig {
                         .exceptionHandling(exception ->
                                 exception.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                         .csrf(csrf ->
-                                csrf
-                                        .disable()
-                                        // ---
+                                        csrf
+                                                .disable()
+                                // ---
                                         /*.csrfTokenRepository(tokenRepository)
                                         .csrfTokenRequestHandler(requestHandler)*/
                         )

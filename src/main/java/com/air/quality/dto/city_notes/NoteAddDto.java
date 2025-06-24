@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +18,8 @@ public final class NoteAddDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 2946202693822018458L;
 
+    UUID cityId;
     String topic;
-    String user;    // TODO może jakoś z kontekstu?
-    String note;
+    String user;
+    String text;
 }

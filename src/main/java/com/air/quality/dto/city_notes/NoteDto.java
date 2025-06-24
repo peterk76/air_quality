@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,14 +18,14 @@ public final class NoteDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 6800612693822017498L;
 
-    String id; // TODO UUID ?
+    UUID uuid;
     String topic;
     String dateAdd;
     String dateMod;
     String user;
-    String note;
+    String text;
 
-    public static NoteDto of(final String id, final String topic, final String dateAdd, final String dateMod, final String user, final String note) {
-        return new NoteDto(id, topic, dateAdd, dateMod, user, note);
+    public static NoteDto of(final UUID uuid, final String topic, final String dateAdd, final String dateMod, final String user, final String text) {
+        return new NoteDto(uuid, topic, dateAdd, dateMod, user, text);
     }
 }
