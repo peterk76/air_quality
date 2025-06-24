@@ -1,5 +1,6 @@
 package com.air.quality.controller;
 
+import com.air.quality.dto.stats.H1CityDto;
 import com.air.quality.dto.stats.M3Dto;
 import com.air.quality.service.StatsService;
 import lombok.AccessLevel;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -20,6 +23,12 @@ public final class StatsController {
     @GetMapping(value = "3M/{regionId}")
     public M3Dto get3M(@PathVariable String regionId) {
         log.info("[Controller] StatsController.get3M: regionId [{}]", regionId);
-        return statsService.get3M(regionId);
+        return statsService.get3M(UUID.fromString(regionId));
+    }
+
+    @GetMapping(value = "1H/city/{cityId}")
+    public H1CityDto get1HCity(@PathVariable UUID cityId) {
+        log.info("[Controller] StatsController.get1HCity: cityId [{}]", cityId);
+        return statsService.get1HCity(cityId);
     }
 }
