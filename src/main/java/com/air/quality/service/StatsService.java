@@ -2,10 +2,10 @@ package com.air.quality.service;
 
 import com.air.quality.dto.stats.H1CityDto;
 import com.air.quality.dto.stats.M3Dto;
-import com.air.quality.entity.Average;
+import com.air.quality.entity.AverageCP;
 import com.air.quality.entity.Measure;
 import com.air.quality.model.City;
-import com.air.quality.repository.AverageRepositoryImpl;
+import com.air.quality.repository.AverageCpRepositoryImpl;
 import com.air.quality.repository.MeasureRepositoryImpl;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ public final class StatsService {
 
     final MeasureRepositoryImpl measureRepository;
     final CityService cityService;
-    final AverageRepositoryImpl averageRepository;
+    final AverageCpRepositoryImpl averageRepository;
 
     public M3Dto get3M(final UUID regionId) {
         var cities = cityService.getCitiesByRegionId(regionId);
@@ -46,7 +46,7 @@ public final class StatsService {
         cities.forEach(city -> {
             var cityAverages = averages.stream()
                     .filter(average -> average.getCit().equals(city.getCityId()))
-                    .sorted(Comparator.comparing(Average::getYrmon))
+                    .sorted(Comparator.comparing(AverageCP::getYrmon))
                     .toList();
             if (cityAverages.size() != FULL_MONTH_COUNT) {
                 return;

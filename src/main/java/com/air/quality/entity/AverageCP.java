@@ -15,11 +15,11 @@ import java.util.UUID;
 @Getter
 @Entity
 @Immutable
-@Table(name = "average")
+@Table(name = "average_cp")
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Average implements Serializable {
+public class AverageCP implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 2367772045309659374L;

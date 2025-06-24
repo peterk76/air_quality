@@ -2,7 +2,7 @@ package com.air.quality.service;
 
 import com.air.quality.dto.report.WorstCityNo2y2yDto;
 import com.air.quality.model.City;
-import com.air.quality.repository.AverageRepositoryImpl;
+import com.air.quality.repository.AverageCpRepositoryImpl;
 import com.opencsv.CSVWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ import static com.opencsv.ICSVWriter.NO_QUOTE_CHARACTER;
 public final class ReportService {
 
     final CityService cityService;
-    final AverageRepositoryImpl averageRepository;
+    final AverageCpRepositoryImpl averageRepository;
 
     static final String[] HEADER = {"CITY", "REGION", "PM10"};
     static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMM");
