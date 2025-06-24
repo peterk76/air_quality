@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public final class CityService {
 
-    List<City> cities = new ArrayList<>();
+    final List<City> cities = new ArrayList<>();
 
     @EventListener(ApplicationReadyEvent.class)
     private void init() {
@@ -39,7 +39,7 @@ public final class CityService {
         return cities;
     }
 
-    public Optional<City> getCityById(final UUID cityId) { // TODO wywalić ?
+    public Optional<City> getCityById(final UUID cityId) {
         return cities.stream()
                 .filter(city -> city.getCityId().equals(cityId))
                 .findFirst();

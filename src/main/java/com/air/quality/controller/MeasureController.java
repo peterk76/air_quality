@@ -23,9 +23,9 @@ public final class MeasureController {
     @PostMapping(value = "save-measure")
     public boolean saveMeasure(@RequestBody MeasureDto measure) {
         log.info("[Controller] SaveController.saveMeasure: measure [{}]", measure.toString());
+        return measureService.saveNew(measure);
         //measureService.saveFake();
         //measureService.saveFake1();
-        return measureService.saveNew(measure);
         //return true; // TODO
     }
 }

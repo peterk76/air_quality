@@ -3,6 +3,7 @@ package com.air.quality.service;
 import com.air.quality.dto.report.WorstCityNo2y2yDto;
 import com.air.quality.model.City;
 import com.air.quality.repository.AverageCpRepositoryImpl;
+import com.air.quality.repository.AverageNDiffRepositoryImpl;
 import com.opencsv.CSVWriter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,8 @@ import static com.opencsv.ICSVWriter.NO_QUOTE_CHARACTER;
 public final class ReportService {
 
     final CityService cityService;
-    final AverageCpRepositoryImpl averageRepository;
+    final AverageCpRepositoryImpl averageCpRepository;
+    final AverageNDiffRepositoryImpl averageNDiffRepository;
 
     static final String[] HEADER = {"CITY", "REGION", "PM10"};
     static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMM");
@@ -40,7 +42,7 @@ public final class ReportService {
     public void reportCurrentTime() {
         var yearMonth = LocalDateTime.now().minusDays(1).format(FORMATTER);
         var csvFile = directory + "/WORST_CITIES_PM10_" + yearMonth + ".csv";
-        var topPm10 = averageRepository.findTop100ByYrmonOrderByAvPm10Desc(yearMonth);
+        var topPm10 = averageCpRepository.findTop100ByYrmonOrderByAvPm10Desc(yearMonth);
         var cities = cityService.getAllCities();
         var rows = topPm10.stream()
                 .map(avg -> {
@@ -66,9 +68,17 @@ public final class ReportService {
     }
 
     public List<WorstCityNo2y2yDto> getWorstCitiesNo2y2y() {
-        return List.of( // TODO
-                WorstCityNo2y2yDto.of("1", "2", "3", "4", "5"),
-                WorstCityNo2y2yDto.of("11", "22", "33", "44", "55")
-        );
+        var yearMonth = LocalDateTime.now().minusMonths(1).format(FORMATTER);
+        return averageNDiffRepository.findByYrmon(yearMonth).stream()
+                .map(averages -> {
+                    var city = cityService.getCityById(averages.getCit());
+                    return WorstCityNo2y2yDto.of(
+                            city.map(City::getCity).orElse("Unknown City"),
+                            averages.getCit().toString(),
+                            city.map(City::getCountry).orElse("Unknown City"),
+                            averages.getAvNo2Curr().toString(),
+                            averages.getAvNo2Prev().toString());
+                })
+                .toList();
     }
 }

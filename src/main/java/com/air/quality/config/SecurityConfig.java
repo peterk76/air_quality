@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .authorizeHttpRequests(authorizeRequests ->
                                 authorizeRequests
                                         .requestMatchers("/api/stats/**").permitAll()
+                                        //.requestMatchers("/api/report/**").permitAll() // TODO
                                         .requestMatchers("/api/save-measure").permitAll()
                                         //.anyRequest().permitAll()
                                         .anyRequest().authenticated()

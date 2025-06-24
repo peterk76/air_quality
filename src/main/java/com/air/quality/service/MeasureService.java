@@ -75,7 +75,7 @@ public class MeasureService {
                         UUID.fromString("00000000-0000-0000-0000-000000000001"),
                         0,
                         month,
-                        0,
+                        year,
                         LocalDateTime.of(year, month, 1, 0, 0, 0, 0) // First day of the month
                 );
                 measureRepository.save(measure);
@@ -84,7 +84,7 @@ public class MeasureService {
                         UUID.fromString("00000000-0000-0000-0000-000000000001"),
                         0,
                         month + 1,
-                        0,
+                        year + 1,
                         LocalDateTime.of(year, month, YearMonth.of(year, month).atEndOfMonth().getDayOfMonth() , 0, 0, 0, 0) // last day of the month
                 );
                 measureRepository.save(measure);
@@ -94,7 +94,7 @@ public class MeasureService {
                         UUID.fromString("00000000-0000-0000-0000-000000000002"),
                         0,
                         month,
-                        0,
+                        year,
                         LocalDateTime.of(year, month, 1, 0, 0, 0, 0) // First day of the month
                 );
                 measureRepository.save(measure);
@@ -103,7 +103,7 @@ public class MeasureService {
                         UUID.fromString("00000000-0000-0000-0000-000000000002"),
                         0,
                         month + 1,
-                        0,
+                        year + 1,
                         LocalDateTime.of(year, month, YearMonth.of(year, month).atEndOfMonth().getDayOfMonth(), 0, 0, 0, 0) // last day of the month
                 );
                 measureRepository.save(measure);
