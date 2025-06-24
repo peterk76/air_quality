@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public interface MeasureRepository extends JpaRepository<Measure, String> {
+public interface MeasureRepositoryImpl extends JpaRepository<Measure, String> {
 
     List<Measure> findByCityIdAndTimestampAfter(final UUID cityId, final LocalDateTime timestamp);
 

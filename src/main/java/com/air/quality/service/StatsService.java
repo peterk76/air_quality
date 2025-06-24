@@ -5,8 +5,8 @@ import com.air.quality.dto.stats.M3Dto;
 import com.air.quality.entity.Average;
 import com.air.quality.entity.Measure;
 import com.air.quality.model.City;
-import com.air.quality.repository.AverageRepository;
-import com.air.quality.repository.MeasureRepository;
+import com.air.quality.repository.AverageRepositoryImpl;
+import com.air.quality.repository.MeasureRepositoryImpl;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,9 +27,9 @@ public final class StatsService {
 
     static final int FULL_MONTH_COUNT = 3;
 
-    final MeasureRepository measureRepository;
+    final MeasureRepositoryImpl measureRepository;
     final CityService cityService;
-    final AverageRepository averageRepository;
+    final AverageRepositoryImpl averageRepository;
 
     public M3Dto get3M(final UUID regionId) {
         var cities = cityService.getCitiesByRegionId(regionId);

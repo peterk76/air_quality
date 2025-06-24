@@ -29,6 +29,6 @@ public class Average implements Serializable {
 
     String yrmon;
     UUID cit;
-    float avCo;
-    float avPm10;
+    Float avCo;
+    Float avPm10;
 }

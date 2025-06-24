@@ -2,7 +2,7 @@ package com.air.quality.service;
 
 import com.air.quality.dto.measure.MeasureDto;
 import com.air.quality.entity.Measure;
-import com.air.quality.repository.MeasureRepository;
+import com.air.quality.repository.MeasureRepositoryImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MeasureService {
 
-    final MeasureRepository measureRepository;
+    final MeasureRepositoryImpl measureRepository;
 
     @Transactional
     public boolean saveNew(final MeasureDto measureDto) {
@@ -37,6 +37,33 @@ public class MeasureService {
         );
         measureRepository.save(measure);
         return true;
+    }
+
+    public void saveFake1() { // TODO delete
+        IntStream.rangeClosed(2025, 2025).forEach(year -> {
+            IntStream.rangeClosed(6, 6).forEach(month -> {
+                IntStream.rangeClosed(1, 200).forEach(city -> {
+                    var measure = Measure.of(
+                            UUID.randomUUID(),
+                            UUID.fromString("00000000-0000-0000-0000-000000000" + String.format("%03d", city)),
+                            city,
+                            0,
+                            0,
+                            LocalDateTime.of(year, month, 1, 0, 0, 0, 0) // First day of the month
+                    );
+                    measureRepository.save(measure);
+                    measure = Measure.of(
+                            UUID.randomUUID(),
+                            UUID.fromString("00000000-0000-0000-0000-000000000" + String.format("%03d", city)),
+                            city + 1,
+                            0,
+                            0,
+                            LocalDateTime.of(year, month, YearMonth.of(year, month).atEndOfMonth().getDayOfMonth() , 0, 0, 0, 0) // last day of the month
+                    );
+                    measureRepository.save(measure);
+                });
+            });
+        });
     }
 
     public void saveFake() { // TODO delete
