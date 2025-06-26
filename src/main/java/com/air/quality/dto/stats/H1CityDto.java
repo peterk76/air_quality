@@ -27,7 +27,7 @@ public final class H1CityDto implements Serializable {
     String maxPM10LastHour;
     String minPM10LastHour;
 
-    @SuppressWarnings({"java:S107"}) // TODO ???
+    @SuppressWarnings({"java:S107"})
     public static H1CityDto of(
         final String avgN02LastHour,
         final String maxNO2LastHour,

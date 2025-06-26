@@ -28,6 +28,7 @@ public class Note implements Serializable {
     UUID cityId;
     String topic;
     LocalDateTime dateAdd;
+    @Setter
     LocalDateTime dateMod;
     String userMod;
     @Setter

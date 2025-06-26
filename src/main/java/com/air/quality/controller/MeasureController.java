@@ -24,8 +24,5 @@ public final class MeasureController {
     public boolean saveMeasure(@RequestBody MeasureDto measure) {
         log.info("[Controller] SaveController.saveMeasure: measure [{}]", measure.toString());
         return measureService.saveNew(measure);
-        //measureService.saveFake();
-        //measureService.saveFake1();
-        //return true; // TODO
     }
 }

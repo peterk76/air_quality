@@ -27,17 +27,17 @@ import static com.opencsv.ICSVWriter.NO_QUOTE_CHARACTER;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public final class ReportService {
 
+    static final String[] HEADER = {"CITY", "REGION", "PM10"};
+    static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMM");
+    static final String UNKNOWN_CITY = "Unknown City";
+
     final CityService cityService;
     final AverageCpRepositoryImpl averageCpRepository;
     final AverageNDiffRepositoryImpl averageNDiffRepository;
 
-    static final String[] HEADER = {"CITY", "REGION", "PM10"};
-    static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMM");
-
     @Value("${report.directory}")
     String directory;
 
-    //@Scheduled(cron = "0/10 * * * * ?") // TODO
     @Scheduled(cron = "0 0 1 * * ?")
     public void reportCurrentTime() {
         var yearMonth = LocalDateTime.now().minusDays(1).format(FORMATTER);
@@ -50,8 +50,8 @@ public final class ReportService {
                             .filter(cit -> cit.getCityId().equals(avg.getCit()))
                             .findFirst();
                     return new String[]{
-                            city.map(City::getCity).orElse("Unknown City"),
-                            city.map(City::getRegion).orElse("Unknown City"),
+                            city.map(City::getCityName).orElse(UNKNOWN_CITY),
+                            city.map(City::getRegion).orElse(UNKNOWN_CITY),
                             avg.getAvPm10().toString()};
                 })
                 .toList();
@@ -73,9 +73,9 @@ public final class ReportService {
                 .map(averages -> {
                     var city = cityService.getCityById(averages.getCit());
                     return WorstCityNo2y2yDto.of(
-                            city.map(City::getCity).orElse("Unknown City"),
+                            city.map(City::getCityName).orElse(UNKNOWN_CITY),
                             averages.getCit().toString(),
-                            city.map(City::getCountry).orElse("Unknown City"),
+                            city.map(City::getCountry).orElse(UNKNOWN_CITY),
                             averages.getAvNo2Curr().toString(),
                             averages.getAvNo2Prev().toString());
                 })

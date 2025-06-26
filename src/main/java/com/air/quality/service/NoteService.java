@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +24,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NoteService {
 
+    static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     final NoteRepositoryImpl noteRepository;
 
     public List<NoteDto> getNotes(final UUID cityId) {
@@ -30,8 +33,8 @@ public class NoteService {
                 .map(note -> NoteDto.of(
                         note.getUuid(),
                         note.getTopic(),
-                        note.getDateAdd().toString(),
-                        note.getDateMod().toString(),
+                        note.getDateAdd().format(FORMATTER),
+                        note.getDateMod().format(FORMATTER),
                         note.getUserMod(),
                         note.getText()))
                 .sorted(Comparator.comparing(NoteDto::getDateAdd).reversed())
@@ -40,9 +43,11 @@ public class NoteService {
 
     @Transactional
     public boolean editNote(final NoteEditDto editNote) {
+        var date = LocalDateTime.now();
         return noteRepository.getNoteByUuid(editNote.getUuid())
                 .map(note -> {
                     note.setText(editNote.getText());
+                    note.setDateMod(date);
                     noteRepository.save(note);
                     return true;
                 })
@@ -54,13 +59,13 @@ public class NoteService {
 
     @Transactional
     public boolean addNote(final NoteAddDto addNote) {
-        var time = LocalDateTime.now();
+        var date = LocalDateTime.now();
         var note = Note.of(
                 UUID.randomUUID(),
                 addNote.getCityId(),
                 addNote.getTopic(),
-                time,
-                time,
+                date,
+                date,
                 addNote.getUser(),
                 addNote.getText());
         noteRepository.save(note);

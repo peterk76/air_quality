@@ -1,6 +1,8 @@
 package com.air.quality.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
@@ -11,7 +13,7 @@ import java.util.UUID;
 public final class City {
 
     String country;
-    String city;
+    String cityName;
     UUID cityId;
     String region;
     UUID regionId;

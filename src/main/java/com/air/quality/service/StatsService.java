@@ -52,10 +52,10 @@ public final class StatsService {
                 return;
             }
             if (cityAverages.get(0).getAvCo() < cityAverages.get(1).getAvCo() && cityAverages.get(1).getAvCo() < cityAverages.get(2).getAvCo()) {
-                citiesCo.add(city.getCity());
+                citiesCo.add(city.getCityName());
             }
             if (cityAverages.get(0).getAvPm10() < cityAverages.get(1).getAvPm10() && cityAverages.get(1).getAvPm10() < cityAverages.get(2).getAvPm10()) {
-                citiesPm10.add(city.getCity());
+                citiesPm10.add(city.getCityName());
             }
         });
         return M3Dto.of(citiesCo, citiesPm10);
