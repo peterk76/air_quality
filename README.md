@@ -11,7 +11,7 @@ spring:
   application:
     name: quality
   datasource:
-    url: jdbc:postgresql://localhost:5432/<db name>
+    url: jdbc:postgresql://<host>:<port>/<db name>
     username: <db user>
     password: <db password>
   jpa:
