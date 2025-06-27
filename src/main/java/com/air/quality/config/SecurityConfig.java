@@ -36,15 +36,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        var tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
         var delegate = new XorCsrfTokenRequestAttributeHandler();
         delegate.setCsrfRequestAttributeName(null);
         CsrfTokenRequestHandler requestHandler = delegate::handle;
         return
                 http
                         .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                                /* TODO authentication
-                                .requestMatchers("/api/report/worst-cities-no2-y2y").authenticated()
+                                 //TODO authentication
+                                /*.requestMatchers("/api/report/worst-cities-no2-y2y").authenticated()
                                 .requestMatchers("/city/**").authenticated()
                                 .requestMatchers("/city/note/add").authenticated()
                                 .requestMatchers("/city/note/edit").authenticated()*/
@@ -58,12 +57,13 @@ public class SecurityConfig {
                         .exceptionHandling(exception ->
                                 exception.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                         .csrf(csrf -> csrf
-                                .csrfTokenRepository(tokenRepository)
+                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                                 .csrfTokenRequestHandler(requestHandler)
                                 .ignoringRequestMatchers("/login")
                                 .ignoringRequestMatchers("/api/save-measure")
-                                .ignoringRequestMatchers("/city/note/add")
-                                .ignoringRequestMatchers("/city/note/edit"))
+                                .ignoringRequestMatchers("/city/note/add")      //TODO authentication
+                                .ignoringRequestMatchers("/city/note/edit")     //TODO authentication
+                        )
                         .sessionManagement(httpManag -> httpManag.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                         .build();
     }
@@ -73,7 +73,6 @@ public class SecurityConfig {
         var config = new CorsConfiguration();
         config.addAllowedHeader("X-XSRF-TOKEN");
         config.addAllowedHeader("Content-Type");
-        config.setAllowedHeaders(List.of("*"));
         config.addExposedHeader("Content-Disposition");
         config.setAllowedMethods(Arrays.asList("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedOrigins(List.of("http://localhost:5173/"));

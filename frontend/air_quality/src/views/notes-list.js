@@ -24,7 +24,7 @@ class Notes extends LitElement {
     `;
 
     notesTask = new Task(this, {
-        task: async ([productId], {signal}) => {
+        task: async ([], {signal}) => {
             const params = new URLSearchParams(window.location.search);
             const response = await fetch(`http://localhost:8080/city/${params.get('cityId')}/notes`, {signal});
             if (!response.ok) {

@@ -4,17 +4,26 @@ import {css, html, LitElement} from "lit";
 class No2WorstList extends LitElement {
     static styles = css`
         table, th, td {
-            border:1px solid black;
+            border: 1px solid black;
         }
     `;
 
     no2task = new Task(this, {
-        task: async ([productId], {signal}) => {
-            const response = await fetch(`http://localhost:8080/api/report/worst-cities-no2-y2y`, {signal});
+        task: async ([], {signal}) => {
+            const response = await fetch(`http://localhost:8080/api/report/worst-cities-no2-y2y`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'X-XSRF-TOKEN': sessionStorage.getItem('TOKEN')
+                    },
+                    credentials: 'include'
+                }
+            );
             if (!response.ok) {
                 window.location.replace("/login");
+            } else {
+                return response.json();
             }
-            return response.json();
         },
         args: () => []
     });
@@ -39,7 +48,8 @@ class No2WorstList extends LitElement {
                                 <td>${item.city}</td>
                                 <td>${item.avgNo2Current}</td>
                                 <td>${item.avgNo2YearBefore}</td>
-                                <td><input type="button" onclick="location.href='/notes?cityId=${item.cityId}';" value="Notes"/></td>
+                                <td><input type="button" onclick="location.href='/notes?cityId=${item.cityId}';"
+                                           value="Notes"/></td>
                             </tr>
                         `)}
                     </table>`
@@ -48,4 +58,5 @@ class No2WorstList extends LitElement {
         });
     }
 }
+
 customElements.define('no2-worst-list', No2WorstList);

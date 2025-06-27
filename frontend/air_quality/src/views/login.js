@@ -34,12 +34,12 @@ class Login extends LitElement {
             }
         })
         if (response.ok) {
+            sessionStorage.setItem('TOKEN', document.cookie.replace('XSRF-TOKEN=', ''));
             window.location.href = '/';
         } else {
             alert('Login failed');
         }
     }
-
 }
 
 customElements.define('login-view', Login);
