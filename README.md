@@ -41,3 +41,9 @@ frontend\air_quality>npm install
 frontend\air_quality>npm run dev
 ```
 - web site starting http://localhost:5173/
+
+## to finish
+
+- authorisation
+- reload notes list after add and edit
+- lock/unlock note edit depending on user
