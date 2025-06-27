@@ -27,4 +27,17 @@ report:
 
 - frontend\air_quality
 - javascript + Lit
-- run with Vite - site http://localhost:5173/
+- run with Vite (starting from scratch)
+```sh
+frontend>npx vite
+frontend>ctrl + c
+frontend>npm init --yes
+frontend>npm create vite@latest
+  (air_quality)
+  (Lit)
+  (javascript)
+(copy air_quality from GIT to new created air_quality)
+frontend\air_quality>npm install
+frontend\air_quality>npm run dev
+```
+- web site starting http://localhost:5173/
