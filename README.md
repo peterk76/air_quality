@@ -6,7 +6,7 @@
 - spring boot
 - postgressql (scripts: script.sql)
 - configuration (in file application.yaml)
-```sh
+```
 spring:
   application:
     name: quality
@@ -28,7 +28,7 @@ report:
 - frontend\air_quality
 - javascript + Lit
 - run with Vite (starting from scratch)
-```sh
+```
 frontend>npx vite
 frontend>ctrl + c
 frontend>npm init --yes
