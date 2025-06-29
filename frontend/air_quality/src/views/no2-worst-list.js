@@ -9,7 +9,7 @@ class No2WorstList extends LitElement {
     `;
 
     no2task = new Task(this, {
-        task: async ([], {signal}) => {
+        task: async () => {
             const response = await fetch(`http://localhost:8080/api/report/worst-cities-no2-y2y`,
                 {
                     credentials: 'include'
