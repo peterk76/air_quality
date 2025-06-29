@@ -35,6 +35,7 @@ class Login extends LitElement {
             credentials: 'include'
         })
         if (response.ok) {
+            sessionStorage.setItem('USER', formData.get("username"))
             window.location.href = '/';
         } else {
             alert('Login failed');

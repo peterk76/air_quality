@@ -45,4 +45,3 @@ frontend\air_quality>npm run dev
 ## to finish
 
 - reload notes list after add and edit
-- lock/unlock note edit depending on user

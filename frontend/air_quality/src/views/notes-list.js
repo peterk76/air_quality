@@ -68,8 +68,9 @@ class Notes extends LitElement {
                                         this.user = item.user
                                         this.text = item.text
                                         this.uuid = item.uuid
-                                    }}>Details</button>
-                                    <button @click=${() => { // TODO active only for creator
+                                    }}>Details
+                                    </button>
+                                    <button ?disabled=${item.user !== sessionStorage.getItem('USER')} @click=${() => {
                                         this.modalType = 'EDIT'
                                         this.topic = item.topic
                                         this.dateAdd = item.dateAdd
@@ -77,7 +78,8 @@ class Notes extends LitElement {
                                         this.user = item.user
                                         this.text = item.text
                                         this.uuid = item.uuid
-                                    }}>Edit</button>
+                                    }}>Edit
+                                    </button>
                                 </td>
                             </tr>
                         `)}
@@ -107,7 +109,7 @@ class Notes extends LitElement {
                                         body: JSON.stringify({ 
                                             cityId: params.get('cityId'), 
                                             topic: this.renderRoot.querySelector('#topic').value, 
-                                            user: 'admin', // TODO get user
+                                            user: sessionStorage.getItem('USER'),
                                             text: this.renderRoot.querySelector('#text').value }),
                                         credentials: 'include'
                                     });
