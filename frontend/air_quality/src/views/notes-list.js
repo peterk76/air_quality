@@ -26,7 +26,9 @@ class Notes extends LitElement {
     notesTask = new Task(this, {
         task: async ([], {signal}) => {
             const params = new URLSearchParams(window.location.search);
-            const response = await fetch(`http://localhost:8080/city/${params.get('cityId')}/notes`, {signal});
+            const response = await fetch(`http://localhost:8080/city/${params.get('cityId')}/notes`, {
+                credentials: 'include'
+            });
             if (!response.ok) {
                 window.location.replace("/login");
             }
@@ -106,7 +108,8 @@ class Notes extends LitElement {
                                             cityId: params.get('cityId'), 
                                             topic: this.renderRoot.querySelector('#topic').value, 
                                             user: 'admin', // TODO get user
-                                            text: this.renderRoot.querySelector('#text').value })
+                                            text: this.renderRoot.querySelector('#text').value }),
+                                        credentials: 'include'
                                     });
                                     if (response.ok) {
                                         this._close()
@@ -181,7 +184,8 @@ class Notes extends LitElement {
                                         },
                                         body: JSON.stringify({ 
                                             uuid: this.uuid, 
-                                            text: this.renderRoot.querySelector('#text').value })
+                                            text: this.renderRoot.querySelector('#text').value }),
+                                        credentials: 'include'
                                     });
                                     if (response.ok) {
                                         this._close()

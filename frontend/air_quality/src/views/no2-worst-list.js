@@ -12,10 +12,6 @@ class No2WorstList extends LitElement {
         task: async ([], {signal}) => {
             const response = await fetch(`http://localhost:8080/api/report/worst-cities-no2-y2y`,
                 {
-                    method: 'GET',
-                    headers: {
-                        'X-XSRF-TOKEN': sessionStorage.getItem('TOKEN')
-                    },
                     credentials: 'include'
                 }
             );
@@ -32,27 +28,29 @@ class No2WorstList extends LitElement {
         return this.no2task.render({
             pending: () => html`<p>Loading cities ...</p>`,
             complete: (cities) => {
-                return html`
-                    <h1>Worst european NO2 cities</h1>
-                    <table style="width:100%">
-                        <tr>
-                            <th>Country</th>
-                            <th>City</th>
-                            <th>Average No2 last month</th>
-                            <th>Average No2 last year</th>
-                            <th>Actions</th>
-                        </tr>
-                        ${cities.map((item) => html`
-                            <tr>
-                                <td>${item.country}</td>
-                                <td>${item.city}</td>
-                                <td>${item.avgNo2Current}</td>
-                                <td>${item.avgNo2YearBefore}</td>
-                                <td><input type="button" onclick="location.href='/notes?cityId=${item.cityId}';"
-                                           value="Notes"/></td>
-                            </tr>
-                        `)}
-                    </table>`
+                return !cities
+                    ? html``
+                    : html`
+                            <h1>Worst european NO2 cities</h1>
+                            <table style="width:100%">
+                                <tr>
+                                    <th>Country</th>
+                                    <th>City</th>
+                                    <th>Average No2 last month</th>
+                                    <th>Average No2 last year</th>
+                                    <th>Actions</th>
+                                </tr>
+                                ${cities.map((item) => html`
+                                    <tr>
+                                        <td>${item.country}</td>
+                                        <td>${item.city}</td>
+                                        <td>${item.avgNo2Current}</td>
+                                        <td>${item.avgNo2YearBefore}</td>
+                                        <td><input type="button" onclick="location.href='/notes?cityId=${item.cityId}';"
+                                                   value="Notes"/></td>
+                                    </tr>
+                                `)}
+                            </table>`
             },
             error: (e) => html`<p>Error: ${e}</p>`
         });

@@ -11,3 +11,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 report:
   directory: /tmp/reports
+logging:
+  level:
+   org.springframework.security: DEBUG

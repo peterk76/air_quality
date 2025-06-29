@@ -31,10 +31,10 @@ class Login extends LitElement {
             body: new URLSearchParams(formData),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
-            }
+            },
+            credentials: 'include'
         })
         if (response.ok) {
-            sessionStorage.setItem('TOKEN', document.cookie.replace('XSRF-TOKEN=', ''));
             window.location.href = '/';
         } else {
             alert('Login failed');

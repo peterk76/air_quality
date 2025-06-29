@@ -42,11 +42,10 @@ public class SecurityConfig {
         return
                 http
                         .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                                 //TODO authentication
-                                /*.requestMatchers("/api/report/worst-cities-no2-y2y").authenticated()
+                                .requestMatchers("/api/report/worst-cities-no2-y2y").authenticated()
                                 .requestMatchers("/city/**").authenticated()
                                 .requestMatchers("/city/note/add").authenticated()
-                                .requestMatchers("/city/note/edit").authenticated()*/
+                                .requestMatchers("/city/note/edit").authenticated()
                                 .anyRequest().permitAll())
                         .formLogin(login -> login
                                 .successHandler((request, response, authentication) ->
@@ -61,9 +60,8 @@ public class SecurityConfig {
                                 .csrfTokenRequestHandler(requestHandler)
                                 .ignoringRequestMatchers("/login")
                                 .ignoringRequestMatchers("/api/save-measure")
-                                .ignoringRequestMatchers("/city/note/add")      //TODO authentication
-                                .ignoringRequestMatchers("/city/note/edit")     //TODO authentication
-                        )
+                                .ignoringRequestMatchers("/city/note/add")
+                                .ignoringRequestMatchers("/city/note/edit"))
                         .sessionManagement(httpManag -> httpManag.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                         .build();
     }
